@@ -39,7 +39,6 @@ function callTranslateAPI(text) {
             );
             console.log(data.data.translations[0].detectedSourceLanguage);
           }
-
           resolve({
             translatedText: data.data.translations[0].translatedText.replace(
               /&#39;/g,
@@ -104,13 +103,18 @@ async function translateComments(mutationsList, observer) {
                 }
               }
             });
+
+            // Adding translation tag after entire comment has been translated
             await Promise.all(translationPromises);
+
             let newSpan = document.createElement("span");
             newSpan.setAttribute("dir", "auto");
             newSpan.className = "style-scope yt-formatted-string";
             newSpan.style.display = "block";
             newSpan.textContent =
               "\n (translated from " + originalLanguage + ")";
+
+            // Add new tag directly into the DOM
             comment.parentNode.insertBefore(newSpan, comment.nextSibling);
           }
         }

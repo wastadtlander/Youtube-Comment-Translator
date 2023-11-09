@@ -1,6 +1,6 @@
 /** Google Translate API */
 
-const key = ""; // Insert Key Here
+const key = "AIzaSyAffFHGY4Q4URrju5AXeLlu7XQJrijLF8M"; // Insert Key Here
 const translateURL = `https://translation.googleapis.com/language/translate/v2?key=${key}`;
 const detectURL = `https://translation.googleapis.com/language/translate/v2/detect?key=${key}`;
 const regexEmoji =
@@ -26,9 +26,17 @@ function callTranslateAPI(text) {
       })
         .then((response) => response.json())
         .then((data) => {
-          resolve(
-            data.data.translations[0].translatedText.replace(/&#39;/g, "'")
-          );
+          // console.log(
+          //   data.data.translations[0].translatedText.replace(/&#39;/g, "'")
+          // );
+          // console.log(data.data.translations[0].detectedSourceLanguage);
+          resolve({
+            translatedText: data.data.translations[0].translatedText.replace(
+              /&#39;/g,
+              "'"
+            ),
+            originalLanguage: data.data.translations[0].detectedSourceLanguage,
+          });
         })
         .catch((error) => {
           reject(error);
@@ -51,11 +59,13 @@ function translateComments(mutationsList, observer) {
       mutation.addedNodes.forEach((node) => {
         if (node.nodeName.toLowerCase() == "ytd-comment-renderer") {
           let bodyElement = node.querySelectorAll(
-            "#body #main #comment-content #expander #content #content-text .style-scope.yt-formatted-string"
+            "#body #main #comment-content #expander #content #content-text"
           );
 
           if (bodyElement) {
             bodyElement.forEach((element) => {
+              console.log(element.textContent);
+              console.log(element.className);
               const spellcheckValue = element.getAttribute("spellcheck");
               if (
                 element.textContent.trim() != "" &&
@@ -63,32 +73,18 @@ function translateComments(mutationsList, observer) {
                 element.textContent != " " &&
                 !element.textContent.match(regexEmoji)
               ) {
-                fetch(detectURL, {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    q: element.textContent,
-                  }),
-                })
-                  .then((response) => response.json())
-                  .then((data) => {
-                    language = data.data.detections[0][0].language;
-                    if (language != "en") {
-                      callTranslateAPI(element)
-                        .then((translatedText) => {
-                          if (translatedText) {
-                            element.textContent =
-                              translatedText + " (translated)";
-                            console.log("Translated text:", translatedText);
-                          }
-                        })
-                        .catch((error) => {});
+                callTranslateAPI(element)
+                  .then((response) => {
+                    if (response && response.originalLanguage != "en") {
+                      element.textContent =
+                        response.translatedText +
+                        " (translated from " +
+                        response.originalLanguage +
+                        ")";
                     }
                   })
                   .catch((error) => {
-                    console.log("Error: ", error);
+                    console.log(error);
                   });
               }
             });
@@ -102,18 +98,25 @@ function translateComments(mutationsList, observer) {
 /**
  * Translates comments on click
  */
-commentWrapper.addEventListener("click", (event) => {
-  const comment = event.target.closest("yt-formatted-string");
+// commentWrapper.addEventListener("click", (event) => {
+//   const comment = event.target.closest("yt-formatted-string");
 
-  callTranslateAPI(comment)
-    .then((translatedText) => {
-      if (translatedText) {
-        comment.textContent = translatedText;
-        console.log("Translated text:", translatedText);
-      }
-    })
-    .catch((error) => {});
-});
+//   callTranslateAPI(comment)
+//     .then((response) => {
+//       if (response) {
+//         comment.textContent =
+//           response.translatedText +
+//           " (translated from " +
+//           response.originalLanguage +
+//           ")";
+//         console.log("Translated text:", response.translatedText);
+//         console.log("Original language:", response.originalLanguage);
+//       }
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// });
 
 /**
  * Observer to translate new comments on load

@@ -32,10 +32,13 @@ function callTranslateAPI(text) {
       })
         .then((response) => response.json())
         .then((data) => {
-          // console.log(
-          //   data.data.translations[0].translatedText.replace(/&#39;/g, "'")
-          // );
-          // console.log(data.data.translations[0].detectedSourceLanguage);
+          if (data.data.translations[0].detectedSourceLanguage != "en") {
+            console.log(
+              data.data.translations[0].translatedText.replace(/&#39;/g, "'")
+            );
+            console.log(data.data.translations[0].detectedSourceLanguage);
+          }
+
           resolve({
             translatedText: data.data.translations[0].translatedText.replace(
               /&#39;/g,

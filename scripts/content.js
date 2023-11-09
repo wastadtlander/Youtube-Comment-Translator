@@ -1,6 +1,6 @@
 /** Google Translate API */
 
-const key = "AIzaSyAffFHGY4Q4URrju5AXeLlu7XQJrijLF8M"; // Insert Key Here
+const key = ""; // Insert Key Here
 const translateURL = `https://translation.googleapis.com/language/translate/v2?key=${key}`;
 const detectURL = `https://translation.googleapis.com/language/translate/v2/detect?key=${key}`;
 const commentWrapper = document.body;

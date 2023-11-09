@@ -58,35 +58,42 @@ function translateComments(mutationsList, observer) {
     if (mutation.type == "childList") {
       mutation.addedNodes.forEach((node) => {
         if (node.nodeName.toLowerCase() == "ytd-comment-renderer") {
-          let bodyElement = node.querySelectorAll(
-            "#body #main #comment-content #expander #content #content-text"
-          );
+          let commentsList = node.querySelectorAll("#content-text");
 
-          if (bodyElement) {
-            bodyElement.forEach((element) => {
-              console.log(element.textContent);
-              console.log(element.className);
-              const spellcheckValue = element.getAttribute("spellcheck");
-              if (
-                element.textContent.trim() != "" &&
-                spellcheckValue != "false" &&
-                element.textContent != " " &&
-                !element.textContent.match(regexEmoji)
-              ) {
-                callTranslateAPI(element)
-                  .then((response) => {
-                    if (response && response.originalLanguage != "en") {
-                      element.textContent =
-                        response.translatedText +
-                        " (translated from " +
-                        response.originalLanguage +
-                        ")";
-                    }
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
-              }
+          if (commentsList) {
+            commentsList.forEach((comment) => {
+              let elementList = comment.childNodes;
+
+              elementList.forEach((element) => {
+                if (element) {
+                  console.log(element.textContent);
+                  console.log(element.className);
+
+                  if (
+                    element.textContent.trim() != "" &&
+                    element.textContent != " " &&
+                    !element.textContent.match(regexEmoji) &&
+                    element.className !=
+                      "yt-simple-endpoint style-scope yt-formatted-string"
+                  ) {
+                    callTranslateAPI(element)
+                      .then((response) => {
+                        if (response && response.originalLanguage != "en") {
+                          element.textContent =
+                            response.translatedText +
+                            " (translated from " +
+                            response.originalLanguage +
+                            ")";
+                        }
+                      })
+                      .catch((error) => {
+                        console.log(error);
+                      });
+                  } else {
+                    element.textContent = element.textContent + " ";
+                  }
+                }
+              });
             });
           }
         }

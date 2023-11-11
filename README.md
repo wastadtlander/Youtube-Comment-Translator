@@ -1,6 +1,6 @@
 # Youtube Comment Translator
 
-A Chrome extension to uutomatically translate Youtube comments
+A Chrome extension to automatically translate Youtube comments
 
 Built by [William](https://wastadt.com/) and [Quinn](https://www.quinnha.xyz/)
 
@@ -45,6 +45,8 @@ If you have followed all the instruction above, simply load any video, and comme
 - [x] Click to translate comment
 - [x] Automatically translate all comments on page
 - [x] Add translation tag
-- [ ] Add pictures to the readme
+- [ ] Add pictures/demo to the readme
+- [ ] Figure out a way to load in key locally
 - [ ] Enable translation output to user chosen target languages
 - [ ] Migrate to v3 Google Translate API for extended language functionality
+- [ ] Package extension and launch!

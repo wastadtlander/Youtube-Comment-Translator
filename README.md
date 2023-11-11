@@ -2,7 +2,7 @@
 
 A Chrome extension to uutomatically translate Youtube comments
 
-Built by William Stadtlander and Quinn Ha
+Built by [William](https://wastadt.com/) and [Quinn](https://www.quinnha.xyz/)
 
 ## Built With
 

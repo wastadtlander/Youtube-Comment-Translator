@@ -147,6 +147,6 @@ commentWrapper.addEventListener("click", (event) => {
     });
 });
 
-// Observer Setup
+// Observer to translate new comments on load
 observer = new MutationObserver(translateComments);
 observer.observe(document.body, config);

@@ -1,6 +1,8 @@
 # Youtube Comment Translator
 
-A Chrome Extension to Automatically Translate Youtube Comments
+A Chrome extension to uutomatically translate Youtube comments
+
+Built by William Stadtlander and Quinn Ha
 
 ## Built With
 

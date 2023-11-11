@@ -36,13 +36,12 @@ const key = "keyFromStep3"; // Insert Key Here
 
 ## How to Use
 
-If you have followed all the instruction above, simply load any video, and comments will be translated automatically. Should a comment not be translated, simply click on the comment, and the translation will appear!
+If you have followed all the instruction above, simply load any video, and comments will be translated automatically. If a comment is not translated, simply click on the comment, and the translation will appear!
 
 ## To-do
 
 - [x] Click to translate comment
 - [x] Automatically translate all comments on page
 - [x] Add translation tag
-- [] Enable translation output to user chosen target languages
-- [] Migrate to v3 Google Translate API for extended language functionality
--
+- [ ] Enable translation output to user chosen target languages
+- [ ] Migrate to v3 Google Translate API for extended language functionality

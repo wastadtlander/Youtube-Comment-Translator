@@ -24,8 +24,9 @@ function loadSupportedLanguages() {
             dropdown.appendChild(userLanguageOption);
 
             // Appends each language option to the dropdown.
-            for (const language in data) {
+            for (const language of data) {
                 if (language.code !== userLanguageCode) {
+                    console.log(language);
                     const option = document.createElement('option');
                     option.text = language.name;
                     option.value = language.code;

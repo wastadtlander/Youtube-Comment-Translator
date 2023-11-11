@@ -32,7 +32,7 @@ function callTranslateAPI(text) {
       })
         .then((response) => response.json())
         .then((data) => {
-          if (data.data.translations[0].detectedSourceLanguage != "en") {
+          if (data.data.translations[0].detectedSourceLanguage !== "en") {
             console.log(
               data.data.translations[0].translatedText.replace(/&#39;/g, "'")
             );
@@ -63,9 +63,9 @@ function callTranslateAPI(text) {
  */
 async function translateComments(mutationsList, observer) {
   for (const mutation of mutationsList) {
-    if (mutation.type == "childList") {
+    if (mutation.type === "childList") {
       for (const node of mutation.addedNodes) {
-        if (node.nodeName.toLowerCase() == "ytd-comment-renderer") {
+        if (node.nodeName.toLowerCase() === "ytd-comment-renderer") {
           let commentsList = node.querySelectorAll("#content-text");
 
           for (const comment of commentsList) {
@@ -78,13 +78,13 @@ async function translateComments(mutationsList, observer) {
             elementList.forEach((element, index) => {
               if (element) {
                 if (
-                  element.textContent.trim() != "" &&
-                  element.className !=
+                  element.textContent.trim() !== "" &&
+                  element.className !==
                     "yt-simple-endpoint style-scope yt-formatted-string"
                 ) {
                   const translatePromise = callTranslateAPI(element)
                     .then((response) => {
-                      if (response && response.originalLanguage != "en") {
+                      if (response && response.originalLanguage !== "en") {
                         element.textContent = response.translatedText;
                         translationOccurred = true;
                         originalLanguage = response.originalLanguage;
@@ -95,7 +95,7 @@ async function translateComments(mutationsList, observer) {
                     });
                   translationPromises.push(translatePromise);
                 } else if (
-                  element.className ==
+                  element.className ===
                   "yt-simple-endpoint style-scope yt-formatted-string"
                 ) {
                   element.textContent = element.textContent + "";

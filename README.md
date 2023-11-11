@@ -45,5 +45,6 @@ If you have followed all the instruction above, simply load any video, and comme
 - [x] Click to translate comment
 - [x] Automatically translate all comments on page
 - [x] Add translation tag
+- [ ] Add pictures to the readme
 - [ ] Enable translation output to user chosen target languages
 - [ ] Migrate to v3 Google Translate API for extended language functionality

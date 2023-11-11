@@ -1,8 +1,7 @@
 /** Google Translate API */
 
-const key = ""; // Insert Key Here
+const key = "AIzaSyAffFHGY4Q4URrju5AXeLlu7XQJrijLF8M"; // Insert Key Here
 const translateURL = `https://translation.googleapis.com/language/translate/v2?key=${key}`;
-const detectURL = `https://translation.googleapis.com/language/translate/v2/detect?key=${key}`;
 const commentWrapper = document.body;
 
 /**
@@ -107,15 +106,17 @@ async function translateComments(mutationsList, observer) {
             // Adding translation tag after entire comment has been translated
             await Promise.all(translationPromises);
 
-            let newSpan = document.createElement("span");
-            newSpan.setAttribute("dir", "auto");
-            newSpan.className = "style-scope yt-formatted-string";
-            newSpan.style.display = "block";
-            newSpan.textContent =
-              "\n (translated from " + originalLanguage + ")";
+            if (translationOccurred) {
+              let newSpan = document.createElement("span");
+              newSpan.setAttribute("dir", "auto");
+              newSpan.className = "style-scope yt-formatted-string";
+              newSpan.style.display = "block";
+              newSpan.textContent =
+                "\n (translated from " + originalLanguage + ")";
 
-            // Add new tag directly into the DOM
-            comment.parentNode.insertBefore(newSpan, comment.nextSibling);
+              // Add new tag directly into the DOM
+              comment.parentNode.insertBefore(newSpan, comment.nextSibling);
+            }
           }
         }
       }
@@ -146,8 +147,6 @@ commentWrapper.addEventListener("click", (event) => {
     });
 });
 
-/**
- * Observer setup
- */
+// Observer Setup
 observer = new MutationObserver(translateComments);
 observer.observe(document.body, config);

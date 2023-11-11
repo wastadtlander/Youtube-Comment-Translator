@@ -47,6 +47,8 @@ If you have followed all the instruction above, simply load any video, and comme
 - [x] Add translation tag
 - [ ] Add pictures/demo to the readme
 - [ ] Figure out a way to load in key locally
+- [ ] Incorporate local storage for default language selection
+- [ ] Make a file for consts for organization
 - [ ] Enable translation output to user chosen target languages
 - [ ] Migrate to v3 Google Translate API for extended language functionality
 - [ ] Package extension and launch!

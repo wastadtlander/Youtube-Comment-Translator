@@ -53,8 +53,9 @@ If you have followed all the instruction above, simply load any video, and comme
 - [x] Click to translate comment
 - [x] Automatically translate all comments on page
 - [x] Add translation tag
+- [x] Migrate to React
+- [x] Figure out a way to load in key locally
 - [ ] Add pictures/demo to the readme
-- [ ] Figure out a way to load in key locally
 - [ ] Incorporate local storage for default language selection
 - [ ] Make a file for consts for organization
 - [ ] Enable translation output to user chosen target languages

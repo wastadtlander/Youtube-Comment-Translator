@@ -5,9 +5,7 @@ const key = process.env.REACT_APP_GOOGLE_TRANSLATE_API_KEY; // Insert Key Here
 const translateURL = `https://translation.googleapis.com/language/translate/v2?key=${key}`;
 const commentWrapper = document.body;
 
-/**
- * Observer to translate new comments on load
- */
+// Observer to translate new comments on load
 const config = {
   childList: true,
   subtree: true,

@@ -1,24 +1,17 @@
 {
-  "name": "Chrome React SEO Extension",
-  "description": "The power of React and TypeScript for building interactive Chrome extensions",
+  "name": "Youtube Comment Translator",
+  "description": "Translates Youtube comments.",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
     "default_popup": "index.html",
-    "default_title": "Open the popup"
+    "default_title": "Comment Translator"
   },
-  "icons": {
-    "16": "logo192.png",
-    "48": "logo192.png",
-    "128": "logo192.png"
-  },
-  "permissions": [
-    "activeTab"
- ],
- "content_scripts": [
-  {
-    "matches": ["https://www.youtube.com/watch?v=*"],
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/watch?v=*"],
       "js": ["./static/js/content.js"]
-  }
-]
+    }
+  ]
 }

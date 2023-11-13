@@ -11,7 +11,7 @@ module.exports = {
           ].filter(Boolean),
           content: [
             "./src/background/content.ts",
-            "./src/services/chromeServices/DOMEvaluator.ts",
+            "./src/services/DOMEvaluator.ts",
           ],
         },
         output: {

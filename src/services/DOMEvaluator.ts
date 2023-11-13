@@ -1,4 +1,4 @@
-import { DOMMessage, DOMMessageResponse } from "../../types";
+import { DOMMessage, DOMMessageResponse } from "../types";
 
 // Example listener function that console logs language
 const getUILanguage = (

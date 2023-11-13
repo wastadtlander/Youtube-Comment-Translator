@@ -15,6 +15,7 @@ let observer;
 /**
  * Calls the Google Translate API
  * @param  {HTMLElement} text  text element object.
+ * @return {Promise<TranslateAPIResponse>} list of API responses.
  */
 function callTranslateAPI(
   text: HTMLElement | Text
@@ -58,6 +59,12 @@ function callTranslateAPI(
   });
 }
 
+/**
+ * Automatically translates comments on load
+ *
+ * @param  {HTMLElement} comment  comment to translate.
+ * @return {Promise<void>}        empty promise.
+ */
 async function translateComment(comment: HTMLElement): Promise<void> {
   let translationOccurred = false;
   let originalLanguage = "";
@@ -100,6 +107,7 @@ async function translateComment(comment: HTMLElement): Promise<void> {
       }
     }
   }
+
   // Adding translation tag after entire comment has been translated
   await Promise.all(translationPromises);
 
@@ -120,6 +128,7 @@ async function translateComment(comment: HTMLElement): Promise<void> {
  *
  * @param  {object} mutationsList  text element object.
  * @param  {object} observer  observer properties.
+ * @return {void}
  */
 async function translateAllComments(
   mutationsList: MutationRecord[],

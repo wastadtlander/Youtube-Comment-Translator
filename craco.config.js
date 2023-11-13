@@ -10,8 +10,8 @@ module.exports = {
             paths.appIndexJs,
           ].filter(Boolean),
           content: [
-            "./src/chromeServices/content.ts",
-            "./src/chromeServices/DOMEvaluator.ts",
+            "./src/background/content.ts",
+            "./src/services/DOMEvaluator.ts",
           ],
         },
         output: {

@@ -1,0 +1,17 @@
+{
+  "name": "Youtube Comment Translator",
+  "description": "Translates Youtube comments.",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Comment Translator"
+  },
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/watch?v=*"],
+      "js": ["./static/js/content.js"]
+    }
+  ]
+}

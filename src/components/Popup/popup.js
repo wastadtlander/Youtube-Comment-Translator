@@ -1,3 +1,5 @@
+// Translate to .tsx
+
 const languagesAPI = "https://translation.googleapis.com/language/translate/v2/languages?key=${key}";
 const languagesJSON = "../data/languages.json";
 

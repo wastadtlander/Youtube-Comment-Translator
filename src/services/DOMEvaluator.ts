@@ -6,7 +6,7 @@ const getUILanguage = (
   sender: chrome.runtime.MessageSender,
   sendResponse: (response: DOMMessageResponse) => void
 ) => {
-  console.log("[DomEvaluator]. Message received, language is ", msg);
+  console.log("[DOMEvaluator]. Message received, language is ", msg);
 
   // Prepare the response object
   const response: DOMMessageResponse = {

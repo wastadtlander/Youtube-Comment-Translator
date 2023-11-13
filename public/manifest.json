@@ -10,8 +10,8 @@
   "permissions": ["activeTab"],
   "content_scripts": [
     {
-      "matches": ["https://www.youtube.com/watch?v=*"],
-      "js": ["./static/js/content.js"]
+      "js": ["./static/js/content.js"],
+      "matches": ["https://www.youtube.com/watch?v=*"]
     }
   ]
 }

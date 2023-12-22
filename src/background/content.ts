@@ -163,3 +163,5 @@ commentWrapper.addEventListener("click", (event) => {
 // Observer to translate new comments on load
 observer = new MutationObserver(translateAllComments);
 observer.observe(document.body, config);
+
+// Test comment (remove)

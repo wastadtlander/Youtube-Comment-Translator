@@ -60,63 +60,72 @@ function callTranslateAPI(
 }
 
 /**
+ * Translates an element of a comment
+ *
+ * @param  {ChildNode} element          element to translate.
+ * @return {Promise<[boolean, string]>} [translated, original language].
+ */
+async function processElement(
+  element: ChildNode | Text
+): Promise<[boolean, string]> {
+  if (element instanceof HTMLElement || element instanceof Text) {
+    // Extract textContent and check if it's not null and not empty
+    const textContent = element.textContent || "";
+
+    if (
+      textContent.trim() !== "" &&
+      !(
+        element instanceof HTMLElement &&
+        element.className ===
+          "yt-simple-endpoint style-scope yt-formatted-string"
+      )
+    ) {
+      try {
+        const response = await callTranslateAPI(element);
+        if (response && response.originalLanguage !== "en") {
+          element.textContent = response.translatedText + " ";
+          return [true, response.originalLanguage];
+        }
+      } catch (error) {
+        console.log(error);
+        return [false, ""];
+      }
+    }
+    // Adds an extra space after links
+    else if (
+      element instanceof HTMLElement &&
+      element.className === "yt-simple-endpoint style-scope yt-formatted-string"
+    ) {
+      element.textContent += " ";
+    }
+  }
+
+  return [false, ""];
+}
+
+/**
  * Automatically translates comments on load
  *
  * @param  {HTMLElement} comment  comment to translate.
  * @return {Promise<void>}        empty promise.
  */
 async function translateComment(comment: HTMLElement): Promise<void> {
-  let translationOccurred = false;
-  let originalLanguage = "";
-
-  let translationPromises: Promise<void>[] = [];
+  let translationPromises: Promise<[boolean, string]>[] = [];
 
   for (const element of comment.childNodes) {
-    if (element instanceof HTMLElement || element instanceof Text) {
-      // Extract textContent and check if it's not null and not empty
-      const textContent = element.textContent || "";
-
-      if (
-        textContent.trim() !== "" &&
-        !(
-          element instanceof HTMLElement &&
-          element.className ===
-            "yt-simple-endpoint style-scope yt-formatted-string"
-        )
-      ) {
-        const translatePromise = callTranslateAPI(element)
-          .then((response: TranslateAPIResponse) => {
-            if (response && response.originalLanguage !== "en") {
-              element.textContent = response.translatedText + " ";
-              translationOccurred = true;
-              originalLanguage = response.originalLanguage;
-            }
-          })
-          .catch((error: any) => {
-            console.log(error);
-          });
-        translationPromises.push(translatePromise);
-      }
-      // Adds a extra space after links
-      else if (
-        element instanceof HTMLElement &&
-        element.className ===
-          "yt-simple-endpoint style-scope yt-formatted-string"
-      ) {
-        element.textContent += " ";
-      }
-    }
+    translationPromises.push(processElement(element));
   }
 
   // Adding translation tag after entire comment has been translated
-  await Promise.all(translationPromises);
+  const results = await Promise.all(translationPromises);
+  const isTranslated = results.find((result) => result[0] === true);
 
-  if (translationOccurred && comment.parentNode) {
+  if (isTranslated && comment.parentNode) {
     let newSpan = document.createElement("span");
     newSpan.setAttribute("dir", "auto");
     newSpan.className = "style-scope yt-formatted-string";
     newSpan.style.display = "block";
-    newSpan.textContent = "\n (translated from " + originalLanguage + ")";
+    newSpan.textContent = "\n (translated from " + isTranslated[1] + ")";
 
     // Add new tag directly into the DOM
     comment.parentNode.insertBefore(newSpan, comment.nextSibling);
